@@ -38,7 +38,13 @@ app.use(express.json());
 //     res.JSON(notes);
 
 // })}
+var save=function(data){
+    
+fs.writeFile("journal.json",JSON.stringify(data),"utf8", function(err){
+    if(err)throw err;
 
+
+})}
 
 module.exports = function(app){
     // var journal =[{"title":"tests","body":"asfdfsd","journal":"food"},{"title":"lskfjsdlk","body":"sdjlfkjdsklf","journal":"excercise"},{"title":"ouch","body":"dude","journal":"food"}];
@@ -66,6 +72,7 @@ module.exports = function(app){
      var newNote = req.body;
      journal.push(newNote);
      res.json(newNote);
+     save(journal);
      
  })
 
@@ -80,7 +87,7 @@ app.delete("/api/notes/:note",(req,res)=>{
     var noteDelete=req.params.note;
     journal=journal.filter((item)=>item.title!==noteDelete);
     res.json(journal);
-    // save();
+    save(journal);
 
 
  })
